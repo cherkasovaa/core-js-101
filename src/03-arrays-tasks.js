@@ -34,8 +34,14 @@ function findElement(arr, value) {
  *    2 => [ 1, 3 ]
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  const result = Array(len).fill(0);
+
+  return result.map((el, i) => {
+    let num = el;
+    num += i * 2 + 1;
+    return num;
+  });
 }
 
 /**
@@ -226,8 +232,16 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  let balance = 0;
+  return arr.map((el) => {
+    let num = el;
+
+    num += balance;
+    balance = num;
+
+    return num;
+  });
 }
 
 /**
@@ -241,8 +255,8 @@ function getMovingSum(/* arr */) {
  * [ 'a', 'b', 'c' , null ]  => [ "b", null ]
  * [ "a" ] => []
  */
-function getSecondItems(/* arr */) {
-  throw new Error('Not implemented');
+function getSecondItems(arr) {
+  return arr.filter((el, i) => i % 2 !== 0);
 }
 
 /**
@@ -293,8 +307,8 @@ function get3TopItems(arr) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  return arr.filter((el) => typeof el === 'number' && el > 0).length;
 }
 
 /**
@@ -548,8 +562,15 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const halfArray = arr.length / 2;
+  const middle = Math.floor(halfArray);
+  const firstPart = arr.slice(0, halfArray);
+  const lastPart = arr.slice(Math.ceil(halfArray));
+
+  return arr.length % 2 === 0
+    ? [...lastPart, ...firstPart]
+    : [...lastPart, arr[middle], ...firstPart];
 }
 
 module.exports = {
