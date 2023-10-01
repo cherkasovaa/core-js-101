@@ -133,8 +133,11 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  const isHeightOverlap = rect1.top + rect1.height > rect2.top;
+  const isWidthOverlap = rect1.left + rect1.width > rect2.left;
+
+  return isHeightOverlap && isWidthOverlap;
 }
 
 /**
@@ -338,8 +341,32 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const bracketsConfig = {
+    '[': ']',
+    '(': ')',
+    '{': '}',
+    '<': '>',
+  };
+  const stack = [];
+
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str[i];
+
+    if (char in bracketsConfig && !stack.includes(char)) {
+      stack.push(char);
+    } else {
+      const lastChar = stack[stack.length - 1];
+
+      if (bracketsConfig[lastChar] !== char) {
+        stack.push(char);
+      } else {
+        stack.pop();
+      }
+    }
+  }
+
+  return !stack.length;
 }
 
 /**
@@ -362,8 +389,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 /**

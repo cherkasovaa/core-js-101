@@ -446,8 +446,17 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    const aCountryFirstChar = a.country.charCodeAt(0);
+    const bCountryFirstChar = b.country.charCodeAt(0);
+    const aCityFirstChar = a.city.charCodeAt(0);
+    const bCityFirstChar = b.city.charCodeAt(0);
+
+    return (
+      aCountryFirstChar - bCountryFirstChar || aCityFirstChar - bCityFirstChar
+    );
+  });
 }
 
 /**
@@ -567,8 +576,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map((el) => childrenSelector(el)).flat();
 }
 
 /**
@@ -583,8 +592,10 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  if (indexes.length === 0) return arr;
+
+  return getElementByIndexes(arr[indexes[0]], indexes.slice(1));
 }
 
 /**
