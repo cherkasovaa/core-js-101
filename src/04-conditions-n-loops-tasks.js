@@ -291,8 +291,27 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let sum = 0;
+  let even = false;
+
+  ccn
+    .toString()
+    .split('')
+    .reverse()
+    .forEach((elem) => {
+      const digit = +elem;
+
+      even = !even;
+
+      if (even) {
+        sum += digit;
+      } else {
+        sum += digit < 5 ? digit * 2 : (digit - 5) * 2 + 1;
+      }
+    });
+
+  return sum % 10 === 0;
 }
 
 /**
@@ -405,8 +424,20 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let commonPath = '';
+
+  for (let i = 1; i < pathes.length; i += 1) {
+    let idx = 0;
+
+    while (pathes[0].at(idx) === pathes[i].at(idx)) {
+      idx += 1;
+    }
+
+    commonPath = pathes[0].slice(0, idx);
+  }
+
+  return commonPath.slice(0, commonPath.lastIndexOf('/') + 1);
 }
 
 /**
@@ -427,8 +458,20 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+
+  for (let i = 0; i < m1.length; i += 1) {
+    result[i] = [];
+
+    for (let j = 0; j < m2[0].length; j += 1) {
+      const sell = m1[i].reduce((sum, item, k) => sum + item * m2[k][j], 0);
+
+      result[i][j] = sell;
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -461,8 +504,31 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const winnerPosition = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  const getItem = (idx) => position[(idx - (idx % 3)) / 3][idx % 3];
+
+  for (let i = 0; i < winnerPosition.length; i += 1) {
+    const row = winnerPosition[i];
+    const item = getItem(row[0]);
+    const isAllSameItems = row.every((el) => item === getItem(el) && item);
+
+    if (isAllSameItems) {
+      return item;
+    }
+  }
+
+  return undefined;
 }
 
 module.exports = {
